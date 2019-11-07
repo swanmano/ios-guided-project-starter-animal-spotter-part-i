@@ -14,6 +14,14 @@ enum HTTPMethod: String {
     case post = "POST"
 }
 
+enum NetworkError: Error {
+    case noAuthorization
+    case incorrectAuthorization
+    case otherError
+    case badData
+    case noDecode
+}
+
 class APIController {
     
     private let baseUrl = URL(string: "https://lambdaanimalspotter.vapor.cloud/api")!
@@ -103,6 +111,47 @@ class APIController {
 
     
     // create function for fetching all animal names
+    
+    func fetchAllAnimalNames(completion: @escaping (Result<[String], NetworkError>) -> ()) {
+        guard let bearer = bearer else {
+            completion(.failure(.noAuthorization))
+            return }
+        
+        let allAnimalsUrl = baseUrl.appendingPathComponent("animals/all")
+        var request = URLRequest(url: allAnimalsUrl)
+        request.httpMethod = HTTPMethod.get.rawValue
+        request.setValue("Bearer \(bearer.token)", forHTTPHeaderField: "Authorization")
+        
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            if let response = response as? HTTPURLResponse,
+                response.statusCode == 401 {
+                completion(.failure(.incorrectAuthorization))
+                return
+            }
+            
+            if let error = error {
+                print("Error receiving animal name data: \(error)")
+                completion(.failure(.otherError))
+                return
+            }
+            
+            guard let data = data else {
+                completion(.failure(.badData))
+                return
+            }
+            
+            let decoder = JSONDecoder()
+            do {
+                let animalNames = try decoder.decode([String].self, from: data)
+                completion(.success(animalNames))
+            } catch {
+                print("Error decoding animal objects: \(error)")
+                completion(.failure(.noDecode))
+                return
+            }
+            
+        }.resume()
+    }
     
     // create function for fetching a specific animal
     
