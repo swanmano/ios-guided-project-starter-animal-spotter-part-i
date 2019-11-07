@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		44837DDC237129AD00E7A170 /* Bearer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44837DDB237129AD00E7A170 /* Bearer.swift */; };
+		44DE23892373CB41004CB445 /* Animal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44DE23882373CB41004CB445 /* Animal.swift */; };
 		44F301F8237119B40036097D /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F301F7237119B40036097D /* User.swift */; };
 		CEB8F70C236B8D3600455692 /* AnimalDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB8F70B236B8D3600455692 /* AnimalDetailViewController.swift */; };
 		CEDCA57B22668AB2009EA535 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDCA57A22668AB2009EA535 /* AppDelegate.swift */; };
@@ -21,6 +22,7 @@
 
 /* Begin PBXFileReference section */
 		44837DDB237129AD00E7A170 /* Bearer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bearer.swift; sourceTree = "<group>"; };
+		44DE23882373CB41004CB445 /* Animal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animal.swift; sourceTree = "<group>"; };
 		44F301F7237119B40036097D /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		CEB8F70B236B8D3600455692 /* AnimalDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimalDetailViewController.swift; sourceTree = "<group>"; };
 		CEDCA57722668AB2009EA535 /* AnimalSpotter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AnimalSpotter.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -79,6 +81,7 @@
 			isa = PBXGroup;
 			children = (
 				44F301F7237119B40036097D /* User.swift */,
+				44DE23882373CB41004CB445 /* Animal.swift */,
 				44837DDB237129AD00E7A170 /* Bearer.swift */,
 			);
 			path = Models;
@@ -175,6 +178,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CEB8F70C236B8D3600455692 /* AnimalDetailViewController.swift in Sources */,
+				44DE23892373CB41004CB445 /* Animal.swift in Sources */,
 				CEDCA59A226697BD009EA535 /* APIController.swift in Sources */,
 				44F301F8237119B40036097D /* User.swift in Sources */,
 				44837DDC237129AD00E7A170 /* Bearer.swift in Sources */,
