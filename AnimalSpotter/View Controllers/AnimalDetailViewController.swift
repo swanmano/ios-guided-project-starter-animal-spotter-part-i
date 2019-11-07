@@ -34,7 +34,49 @@ class AnimalDetailViewController: UIViewController {
                 return
         }
         
+        apiController.fetchDetails(for: animalName) { result in
+            do {
+                let animal = try result.get()
+                DispatchQueue.main.async {
+                    self.updateViews(with: animal)
+                }
+                apiController.fetchImage(at: animal.imageURL) { (result) in
+                    if let image = try? result.get() {
+                        self.animalImageView.image = image
+                    }
+                }
+            } catch {
+                if let error = error as? NetworkError {
+                    switch error {
+                    case .noAuthorization:
+                        print("No bearer token exists")
+                        let alertController = UIAlertController(title: "Not Logged In", message: "Please Log In.", preferredStyle: .alert)
+                        let alertAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+                        alertController.addAction(alertAction)
+                        self.present(alertController, animated: true, completion: nil)
+                    case .incorrectAuthorization:
+                        print("Bearer token invalid")
+                    case .otherError:
+                        print("Other error occurred; see log")
+                    case .badData:
+                        print("No data received or data was corrupted")
+                    case .noDecode:
+                        print("JSON could not be decoded")
+                    }
+                }
+            }
+        }
         
+    }
+    
+    private func updateViews(with animal: Animal) {
+        title = animal.name
+        descriptionLabel.text = animal.description
+        coordinatesLabel.text = "lat: \(animal.latitude), long: \(animal.longitute)"
+        let df = DateFormatter()
+        df.dateStyle = .short
+        df.timeStyle = .short
         
+        timeSeenLabel.text = df.string(from: animal.timeSeen)
     }
 }

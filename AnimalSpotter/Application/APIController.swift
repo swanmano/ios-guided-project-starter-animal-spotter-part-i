@@ -183,6 +183,7 @@ class APIController {
                    }
                    
                    let decoder = JSONDecoder()
+                    decoder.dateDecodingStrategy = .secondsSince1970
                    do {
                     let animal = try decoder.decode(Animal.self, from: data)
                        completion(.success(animal))
@@ -196,4 +197,26 @@ class APIController {
     }
     
     // create function to fetch image
+    
+    func fetchImage(at urlString: String, completion: @escaping (Result<UIImage, NetworkError>) -> ()) {
+        let imageUrl = URL(string: urlString)!
+        
+        var request = URLRequest(url: imageUrl)
+        request.httpMethod = HTTPMethod.get.rawValue
+        
+        URLSession.shared.dataTask(with: request) { (data, _, error) in
+            if let _ = error {
+                completion(.failure(.otherError))
+                return
+            }
+            
+            guard let data = data else {
+                completion(.failure(.badData))
+                return
+            }
+            
+            let image = UIImage(data: data)!
+            completion(.success(image))
+        }.resume()
+    }
 }
